@@ -1,6 +1,6 @@
 <?php
 
-require_once ($_SERVER['DOCUMENT_ROOT'] . '/project/vendor/autoload.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
 
 include_once "RestController.php";
 include_once "AuthController.php";
@@ -9,21 +9,18 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
-
 $authController = new AuthController($requestMethod);
 
-var_dump($_GET);
-var_dump($_REQUEST);
+switch ($uri[1]) {
+    case 'login':
+        if(isset($_POST['username']) && isset($_POST['password'])) {
+            $jwt = $authController->processRequest($_POST['username'], $_POST['password']);
+            echo $jwt['body'] ?? "";
+        }
+        break;
 
-switch ($uri[2]) {
-    case 'LoginPage':
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-
-        $authController->processRequest($_POST['username'], $_POST['password']);
-
-        //header('Location: /project/HomePage/HomePage.html');
-
+    case 'playGame':
+        echo "play the game";
         break;
 
     default:
