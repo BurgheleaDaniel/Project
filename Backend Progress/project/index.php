@@ -12,20 +12,23 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 $authController = new AuthController($requestMethod);
 
+var_dump($_GET);
+var_dump($_REQUEST);
+
 switch ($uri[2]) {
     case 'LoginPage':
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        $authController ->processRequest($username, $password);
+        $authController->processRequest($_POST['username'], $_POST['password']);
 
-        header('Location: /project/HomePage/HomePage.html');
+        //header('Location: /project/HomePage/HomePage.html');
 
         break;
 
     default:
 
-        header('Location: /project/LoginPage/LoginPage.html');
+        //header('Location: /project/LoginPage/LoginPage.html');
         exit();
 }
 
